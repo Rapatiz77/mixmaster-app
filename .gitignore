@@ -1,0 +1,42 @@
+# Secrets et clés (ne jamais publier)
+.env
+.env.*
+*.pem
+*.key
+secrets.json
+
+# Fichiers audio de test (GitHub refuse plus de 100 Mo)
+*.wav
+*.mp3
+*.m4a
+*.flac
+*.aiff
+*.ogg
+
+# Dépendances
+node_modules/
+
+# Compilation
+dist/
+build/
+.cache/
+
+# Journaux
+*.log
+npm-debug.log*
+
+# Fichiers système
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Éditeurs de code
+.vscode/
+.idea/
+*.swp
+*~
+
+# Temporaires
+tmp/
+temp/
+*.tmp
