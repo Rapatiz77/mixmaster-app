@@ -3,98 +3,209 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#0a0a0b">
 <title>MixMaster – Mixage et mastering en ligne</title>
 <style>
   :root {
-    --bg: #eef1f2;
-    --panel: #ffffff;
-    --ink: #12343b;
-    --muted: #5d747a;
-    --accent: #1f7a8c;
-    --signal: #f2a541;
-    --line: #cfd9dc;
-    color-scheme: light;
-  }
-  @media (prefers-color-scheme: dark) {
-    :root {
-      --bg: #0f2226;
-      --panel: #16313a;
-      --ink: #e6eff1;
-      --muted: #94b0b6;
-      --accent: #4fb3c7;
-      --signal: #f2a541;
-      --line: #2a4a53;
-      color-scheme: dark;
-    }
+    --bg: #0a0a0b;
+    --panel: #141416;
+    --ink: #f4ecd8;
+    --muted: #a8a090;
+    --gold: #d4af37;
+    --gold-light: #f0d77a;
+    --gold-dark: #9c7a1c;
+    --line: #2d2a22;
+    color-scheme: dark;
   }
   * { box-sizing: border-box; }
+  [hidden] { display: none !important; }
   html, body { margin: 0; }
   body {
-    background: var(--bg);
+    background: radial-gradient(ellipse at top, #1a1608 0%, var(--bg) 55%) fixed;
     color: var(--ink);
     font-family: "Avenir Next", "Segoe UI", system-ui, -apple-system, sans-serif;
     line-height: 1.5;
     padding: max(16px, env(safe-area-inset-top)) 16px max(24px, env(safe-area-inset-bottom));
   }
   main { max-width: 560px; margin: 0 auto; }
-  h1 { font-size: 1.7rem; margin: 8px 0 4px; letter-spacing: -0.02em; }
+  h1 {
+    font-size: 1.9rem;
+    margin: 8px 0 4px;
+    letter-spacing: 0.02em;
+    background: linear-gradient(90deg, var(--gold-light), var(--gold) 50%, var(--gold-dark));
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    color: var(--gold);
+  }
   .sub { color: var(--muted); margin: 0 0 20px; }
   .panel {
     background: var(--panel);
     border: 1px solid var(--line);
+    border-top: 2px solid var(--gold-dark);
     border-radius: 14px;
     padding: 16px;
     margin-bottom: 14px;
+    box-shadow: 0 6px 24px rgba(0, 0, 0, 0.5);
   }
-  h2 { font-size: 1rem; margin: 0 0 12px; }
-  input[type="file"] { width: 100%; font-size: 1rem; }
-  #fileInfo { color: var(--muted); font-size: .9rem; margin: 8px 0 0; }
+  h2 { font-size: 1rem; margin: 0 0 12px; color: var(--gold); letter-spacing: 0.03em; }
+  input[type="file"] { width: 100%; font-size: 1rem; color: var(--ink); }
+  select, input[type="email"], input[type="password"] {
+    width: 100%;
+    font: inherit;
+    padding: 10px 12px;
+    border-radius: 10px;
+    border: 1px solid var(--line);
+    background: #0d0d0f;
+    color: var(--ink);
+  }
+  .note { color: var(--muted); font-size: .88rem; margin: 8px 0 0; }
   .row { display: flex; gap: 10px; flex-wrap: wrap; }
   button {
     font: inherit;
-    font-weight: 600;
-    border: 0;
+    font-weight: 700;
+    border: 1px solid var(--gold);
     border-radius: 10px;
     padding: 12px 16px;
-    background: var(--accent);
-    color: #fff;
+    background: linear-gradient(180deg, var(--gold-light), var(--gold) 55%, var(--gold-dark));
+    color: #1a1405;
     cursor: pointer;
     flex: 1 1 auto;
   }
-  button.alt { background: transparent; color: var(--ink); border: 1px solid var(--line); }
-  button.on { background: var(--signal); color: #12343b; border-color: var(--signal); }
-  button:disabled { opacity: .45; cursor: not-allowed; }
-  button:focus-visible, input:focus-visible { outline: 3px solid var(--signal); outline-offset: 2px; }
+  button.alt {
+    background: transparent;
+    color: var(--gold-light);
+    border: 1px solid var(--gold-dark);
+  }
+  button.on {
+    background: linear-gradient(180deg, var(--gold-light), var(--gold));
+    color: #1a1405;
+    border-color: var(--gold-light);
+  }
+  button.small { padding: 6px 10px; font-size: .85rem; flex: 0 0 auto; }
+  button:disabled { opacity: .4; cursor: not-allowed; }
+  button:focus-visible, input:focus-visible, select:focus-visible { outline: 3px solid var(--gold-light); outline-offset: 2px; }
   .ctl { margin-bottom: 14px; }
   .ctl:last-child { margin-bottom: 0; }
   .ctl label { display: flex; justify-content: space-between; font-size: .95rem; margin-bottom: 4px; }
-  .ctl output { color: var(--muted); font-variant-numeric: tabular-nums; }
-  input[type="range"] { width: 100%; accent-color: var(--accent); }
-  #status { min-height: 1.4em; color: var(--muted); font-size: .9rem; margin: 6px 0 0; }
+  .ctl output { color: var(--gold-light); font-variant-numeric: tabular-nums; }
+  input[type="range"] { width: 100%; accent-color: var(--gold); }
+  input[type="checkbox"] { accent-color: var(--gold); }
+  .check { display: flex; gap: 8px; align-items: flex-start; margin-top: 12px; font-size: .95rem; }
+  .tablewrap { overflow-x: auto; }
+  table { width: 100%; border-collapse: collapse; font-size: .9rem; }
+  th, td { padding: 8px 6px; text-align: center; border-bottom: 1px solid var(--line); white-space: nowrap; }
+  th:first-child, td:first-child { text-align: left; font-weight: 600; color: var(--gold-light); }
+  th { color: var(--muted); font-weight: 600; font-size: .8rem; }
+  .badge {
+    display: inline-block;
+    font-size: .72rem;
+    font-weight: 700;
+    padding: 2px 8px;
+    border-radius: 999px;
+    background: linear-gradient(180deg, var(--gold-light), var(--gold));
+    color: #1a1405;
+    margin-left: 6px;
+    vertical-align: middle;
+  }
+  #status { min-height: 1.4em; color: var(--gold-light); font-size: .9rem; margin: 10px 0 0; }
 </style>
 </head>
 <body>
 <main>
   <h1>MixMaster</h1>
-  <p class="sub">Charge ton morceau, règle le son, exporte en WAV.</p>
+  <p class="sub">Mixage et mastering automatiques, directement dans ton navigateur.</p>
 
+  <!-- COMPTE -->
+  <section class="panel" id="account">
+    <h2>Mon compte</h2>
+    <p id="testBanner" class="note" hidden>Mode test : les comptes ne sont pas encore configurés, toutes les fonctions sont ouvertes.</p>
+    <div id="authOut">
+      <div class="ctl"><label for="email">E-mail</label>
+        <input type="email" id="email" autocomplete="email"></div>
+      <div class="ctl"><label for="pass">Mot de passe (6 caractères minimum)</label>
+        <input type="password" id="pass" autocomplete="current-password"></div>
+      <div class="row">
+        <button id="login">Se connecter</button>
+        <button id="signup" class="alt">Créer un compte</button>
+      </div>
+    </div>
+    <div id="authIn" hidden>
+      <p id="whoami"></p>
+      <div class="row">
+        <button id="upgrade">Passer Premium – 10 $ / mois</button>
+        <button id="logout" class="alt">Se déconnecter</button>
+      </div>
+    </div>
+    <p id="quota" class="note"></p>
+    <p class="note">Gratuit : 3 exports par mois. Premium (10 $ / mois) : exports illimités, volume adapté aux plateformes, séparation voix / instrumental.</p>
+    <p id="authMsg" class="note" role="status"></p>
+  </section>
+
+  <!-- 1. FICHIER -->
   <section class="panel">
     <h2>1. Ton fichier audio</h2>
     <input type="file" id="file" accept="audio/*">
-    <p id="fileInfo">Aucun fichier chargé.</p>
+    <p id="fileInfo" class="note">Aucun fichier chargé.</p>
   </section>
 
+  <!-- 2. MASTER AUTO -->
   <section class="panel">
-    <h2>2. Préréglages</h2>
-    <div class="row">
-      <button class="alt" data-preset="doux">Doux</button>
-      <button class="alt" data-preset="rap">Rap</button>
-      <button class="alt" data-preset="club">Club</button>
+    <h2>2. Master automatique</h2>
+    <div class="ctl">
+      <label for="platform">Plateforme visée</label>
+      <select id="platform">
+        <option value="spotify">Spotify (−14 LUFS)</option>
+        <option value="apple">Apple Music (−16 LUFS)</option>
+        <option value="youtube">YouTube (−14 LUFS)</option>
+        <option value="tidal">Tidal (−14 LUFS)</option>
+        <option value="amazon">Amazon Music (−14 LUFS)</option>
+        <option value="deezer">Deezer (−15 LUFS)</option>
+        <option value="soundcloud">SoundCloud (−14 LUFS)</option>
+      </select>
     </div>
+    <div class="row"><button id="auto" disabled>Masteriser automatiquement</button></div>
+    <p id="autoInfo" class="note"></p>
+    <label class="check"><input type="checkbox" id="match" checked>
+      <span>Ajuster le volume final à la plateforme choisie, pic maximum −1 dB <span class="badge">Premium</span></span></label>
+    <p class="note">Niveaux courants des plateformes, mesure approximative. Vérifie les recommandations officielles pour une sortie importante.</p>
   </section>
 
+  <!-- 3. PRESETS -->
   <section class="panel">
-    <h2>3. Réglages</h2>
+    <h2>3. Préréglages de mixage</h2>
+    <div class="tablewrap">
+      <table>
+        <thead><tr><th>Style</th><th>Graves</th><th>Méd.</th><th>Aigus</th><th>Comp.</th><th></th></tr></thead>
+        <tbody id="presetBody"></tbody>
+      </table>
+    </div>
+    <p class="note">Valeurs en dB. « Comp. » = seuil de compression. Tu peux ensuite ajuster à la main.</p>
+  </section>
+
+  <!-- 4. VOIX -->
+  <section class="panel">
+    <h2>4. Réglage vocal automatique</h2>
+    <div class="ctl">
+      <label for="vocal">Type de voix</label>
+      <select id="vocal">
+        <option value="rap">Voix rap</option>
+        <option value="chant">Voix chantée</option>
+        <option value="parle">Voix parlée / podcast</option>
+      </select>
+    </div>
+    <div class="row"><button id="vocalBtn" class="alt">Appliquer le réglage vocal</button></div>
+    <div class="ctl" style="margin-top:14px"><label for="hpf">Coupe-bas <output id="hpfO"></output></label>
+      <input type="range" id="hpf" min="0" max="200" step="5" value="0"></div>
+    <div class="ctl"><label for="pres">Présence de la voix <output id="presO"></output></label>
+      <input type="range" id="pres" min="-6" max="8" step="0.5" value="0"></div>
+    <div class="ctl"><label for="deess">Atténuation des « s » <output id="deessO"></output></label>
+      <input type="range" id="deess" min="0" max="10" step="0.5" value="0"></div>
+  </section>
+
+  <!-- 5. REGLAGES -->
+  <section class="panel">
+    <h2>5. Réglages généraux</h2>
     <div class="ctl"><label for="low">Graves <output id="lowO"></output></label>
       <input type="range" id="low" min="-12" max="12" step="0.5" value="0"></div>
     <div class="ctl"><label for="mid">Médiums <output id="midO"></output></label>
@@ -111,8 +222,45 @@
       <input type="range" id="ceil" min="-6" max="0" step="0.1" value="-1"></div>
   </section>
 
+  <!-- 6. SEPARATION -->
   <section class="panel">
-    <h2>4. Écoute et export</h2>
+    <h2>6. Voix et instrumental <span class="badge">Premium</span></h2>
+    <p class="note" style="margin-top:0">Mode rapide : extrait ce qui est au centre du mix (la voix) et le reste (l’instrumental). La qualité est basique. La séparation par intelligence artificielle, bien plus précise, est l’étape suivante.</p>
+    <div class="row" style="margin-top:10px"><button id="split" class="alt" disabled>Séparer voix et instrumental</button></div>
+  </section>
+
+  <!-- 7. AUTO-TUNE -->
+  <section class="panel">
+    <h2>7. Auto-Tune <span class="badge">Premium</span></h2>
+    <p class="note" style="margin-top:0">À utiliser sur une voix seule (a cappella), pas sur un morceau complet avec instruments. Les meilleurs résultats : voix claire, sans écho ni réverbération.</p>
+    <div class="ctl" style="margin-top:14px"><label for="tkey">Tonalité</label>
+      <select id="tkey">
+        <option value="0">Do</option><option value="1">Do♯</option><option value="2">Ré</option>
+        <option value="3">Ré♯</option><option value="4">Mi</option><option value="5">Fa</option>
+        <option value="6">Fa♯</option><option value="7">Sol</option><option value="8">Sol♯</option>
+        <option value="9">La</option><option value="10">La♯</option><option value="11">Si</option>
+      </select></div>
+    <div class="ctl"><label for="tscale">Gamme</label>
+      <select id="tscale">
+        <option value="chrom">Chromatique (toutes les notes)</option>
+        <option value="major">Majeure</option>
+        <option value="minor">Mineure</option>
+      </select></div>
+    <div class="ctl"><label for="tamount">Force de correction <output id="tamountO"></output></label>
+      <input type="range" id="tamount" min="0" max="100" step="5" value="100"></div>
+    <div class="ctl"><label for="tspeed">Vitesse <output id="tspeedO"></output></label>
+      <input type="range" id="tspeed" min="0" max="100" step="5" value="70"></div>
+    <p class="note">Vitesse haute = effet « robot » typique de l’Auto-Tune. Vitesse basse = correction discrète et naturelle.</p>
+    <div class="row" style="margin-top:10px">
+      <button id="tune" disabled>Appliquer l’Auto-Tune</button>
+      <button id="untune" class="alt" disabled>Annuler</button>
+    </div>
+    <p id="tuneInfo" class="note"></p>
+  </section>
+
+  <!-- 8. ECOUTE ET EXPORT -->
+  <section class="panel">
+    <h2>8. Écoute et export</h2>
     <div class="row">
       <button id="play" disabled>Lire</button>
       <button id="stop" class="alt" disabled>Arrêter</button>
@@ -125,20 +273,66 @@
   </section>
 </main>
 
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.js"></script>
 <script>
 (function () {
+  "use strict";
+
+  // ============================================================
+  // CONFIGURATION : remplis ces 3 valeurs (voir GUIDE-ABONNEMENT.md)
+  // Tant que ces valeurs sont vides, l’app est en « mode test »
+  // et toutes les fonctions sont ouvertes.
+  // ============================================================
+  var CONFIG = {
+    SUPABASE_URL: "",
+    SUPABASE_ANON_KEY: "",
+    STRIPE_LINK: "",
+    FREE_EXPORTS: 3
+  };
+
   var AC = window.AudioContext || window.webkitAudioContext;
-  var ctx = null;
-  var buffer = null;
-  var fileName = "morceau";
-  var source = null;
-  var live = null;
-  var bypass = false;
+  var OAC = window.OfflineAudioContext || window.webkitOfflineAudioContext;
+  var ctx = null, buffer = null, orig = null, fileName = "morceau";
+  var sources = [], live = null, bypass = false, busy = false;
+  var sb = null, user = null, premium = false, testMode = false;
 
   var $ = function (id) { return document.getElementById(id); };
-  var ids = ["low", "mid", "high", "thr", "ratio", "gain", "ceil"];
-  var units = { low: " dB", mid: " dB", high: " dB", thr: " dB", ratio: " : 1", gain: " dB", ceil: " dB" };
+  var ids = ["low", "mid", "high", "thr", "ratio", "gain", "ceil", "hpf", "pres", "deess"];
+  var units = { low: " dB", mid: " dB", high: " dB", thr: " dB", ratio: " : 1", gain: " dB", ceil: " dB", hpf: " Hz", pres: " dB", deess: " dB" };
 
+  var TARGETS = {
+    spotify:    { name: "Spotify", lufs: -14 },
+    apple:      { name: "Apple Music", lufs: -16 },
+    youtube:    { name: "YouTube", lufs: -14 },
+    tidal:      { name: "Tidal", lufs: -14 },
+    amazon:     { name: "Amazon Music", lufs: -14 },
+    deezer:     { name: "Deezer", lufs: -15 },
+    soundcloud: { name: "SoundCloud", lufs: -14 }
+  };
+
+  var PRESETS = [
+    { n: "Doux",  low: 1, mid: 0,  high: 1.5, thr: -20, ratio: 2, gain: 0 },
+    { n: "Rap",   low: 4, mid: -1, high: 2.5, thr: -22, ratio: 4, gain: 1.5 },
+    { n: "Trap",  low: 6, mid: -2, high: 3,   thr: -24, ratio: 5, gain: 2 },
+    { n: "Afro",  low: 3, mid: 1,  high: 2,   thr: -20, ratio: 3, gain: 1 },
+    { n: "Pop",   low: 2, mid: 0.5, high: 3,  thr: -20, ratio: 3, gain: 1 },
+    { n: "Club",  low: 5, mid: -2, high: 3,   thr: -26, ratio: 6, gain: 2.5 }
+  ];
+
+  var VOCALS = {
+    rap:   { hpf: 90,  pres: 3,   deess: 3, thr: -22, ratio: 4 },
+    chant: { hpf: 80,  pres: 2,   deess: 4, thr: -20, ratio: 3 },
+    parle: { hpf: 100, pres: 2.5, deess: 2, thr: -18, ratio: 3 }
+  };
+
+  function setStatus(t) { $("status").textContent = t; }
+  function clamp(x, a, b) { return Math.max(a, Math.min(b, x)); }
+  function half(x) { return Math.round(x * 2) / 2; }
+  function sign(x) { return (x > 0 ? "+" : "") + x; }
+
+  // ------------------------------------------------------------
+  // Réglages
+  // ------------------------------------------------------------
   function params() {
     var p = {};
     ids.forEach(function (k) { p[k] = parseFloat($(k).value); });
@@ -146,38 +340,16 @@
   }
 
   function refreshLabels() {
-    ids.forEach(function (k) { $(k + "O").textContent = $(k).value + units[k]; });
+    ids.forEach(function (k) {
+      var t = $(k).value + units[k];
+      if (k === "hpf" && parseFloat($(k).value) === 0) t = "Désactivé";
+      $(k + "O").textContent = t;
+    });
   }
 
-  function setStatus(t) { $("status").textContent = t; }
-
-  // Construit la chaîne de traitement : EQ -> compresseur -> volume -> limiteur
-  function buildChain(c) {
-    var low = c.createBiquadFilter();
-    low.type = "lowshelf"; low.frequency.value = 120;
-    var mid = c.createBiquadFilter();
-    mid.type = "peaking"; mid.frequency.value = 1500; mid.Q.value = 0.8;
-    var high = c.createBiquadFilter();
-    high.type = "highshelf"; high.frequency.value = 6000;
-    var comp = c.createDynamicsCompressor();
-    comp.knee.value = 6; comp.attack.value = 0.01; comp.release.value = 0.2;
-    var gain = c.createGain();
-    var lim = c.createDynamicsCompressor();
-    lim.ratio.value = 20; lim.knee.value = 0;
-    lim.attack.value = 0.001; lim.release.value = 0.08;
-    low.connect(mid); mid.connect(high); high.connect(comp);
-    comp.connect(gain); gain.connect(lim);
-    return { input: low, output: lim, low: low, mid: mid, high: high, comp: comp, gain: gain, lim: lim };
-  }
-
-  function applyParams(n, p) {
-    n.low.gain.value = p.low;
-    n.mid.gain.value = p.mid;
-    n.high.gain.value = p.high;
-    n.comp.threshold.value = p.thr;
-    n.comp.ratio.value = p.ratio;
-    n.gain.gain.value = Math.pow(10, p.gain / 20);
-    n.lim.threshold.value = p.ceil;
+  function setSliders(p) {
+    ids.forEach(function (k) { if (p[k] !== undefined) $(k).value = p[k]; });
+    onChange();
   }
 
   function onChange() {
@@ -186,40 +358,327 @@
   }
   ids.forEach(function (k) { $(k).addEventListener("input", onChange); });
 
-  var presets = {
-    doux: { low: 1, mid: 0, high: 1.5, thr: -20, ratio: 2, gain: 0, ceil: -1 },
-    rap:  { low: 4, mid: -1, high: 2.5, thr: -22, ratio: 4, gain: 1.5, ceil: -1 },
-    club: { low: 5, mid: -2, high: 3, thr: -26, ratio: 6, gain: 2.5, ceil: -0.5 }
-  };
-  document.querySelectorAll("[data-preset]").forEach(function (b) {
-    b.addEventListener("click", function () {
-      var p = presets[b.getAttribute("data-preset")];
-      ids.forEach(function (k) { $(k).value = p[k]; });
-      onChange();
-      setStatus("Préréglage appliqué.");
-    });
+  // ------------------------------------------------------------
+  // Chaîne audio : coupe-bas, EQ, présence, « s », compresseur, volume, limiteur
+  // ------------------------------------------------------------
+  function buildChain(c) {
+    var hpf = c.createBiquadFilter(); hpf.type = "highpass"; hpf.Q.value = -3;
+    var low = c.createBiquadFilter(); low.type = "lowshelf"; low.frequency.value = 120;
+    var mid = c.createBiquadFilter(); mid.type = "peaking"; mid.frequency.value = 1500; mid.Q.value = 0.8;
+    var pres = c.createBiquadFilter(); pres.type = "peaking"; pres.frequency.value = 3500; pres.Q.value = 1;
+    var deess = c.createBiquadFilter(); deess.type = "peaking"; deess.frequency.value = 7500; deess.Q.value = 3;
+    var high = c.createBiquadFilter(); high.type = "highshelf"; high.frequency.value = 6000;
+    var comp = c.createDynamicsCompressor();
+    comp.knee.value = 6; comp.attack.value = 0.01; comp.release.value = 0.2;
+    var gain = c.createGain();
+    var lim = c.createDynamicsCompressor();
+    lim.ratio.value = 20; lim.knee.value = 0; lim.attack.value = 0.001; lim.release.value = 0.08;
+    hpf.connect(low); low.connect(mid); mid.connect(pres); pres.connect(deess);
+    deess.connect(high); high.connect(comp); comp.connect(gain); gain.connect(lim);
+    return { input: hpf, output: lim, hpf: hpf, low: low, mid: mid, pres: pres, deess: deess, high: high, comp: comp, gain: gain, lim: lim };
+  }
+
+  function applyParams(n, p) {
+    n.hpf.frequency.value = p.hpf > 0 ? p.hpf : 10;
+    n.low.gain.value = p.low;
+    n.mid.gain.value = p.mid;
+    n.pres.gain.value = p.pres;
+    n.deess.gain.value = -p.deess;
+    n.high.gain.value = p.high;
+    n.comp.threshold.value = p.thr;
+    n.comp.ratio.value = p.ratio;
+    n.gain.gain.value = Math.pow(10, p.gain / 20);
+    n.lim.threshold.value = p.ceil;
+  }
+
+  function render(p) {
+    var off = new OAC(buffer.numberOfChannels, buffer.length, buffer.sampleRate);
+    var chain = buildChain(off);
+    applyParams(chain, p);
+    var src = off.createBufferSource();
+    src.buffer = buffer;
+    src.connect(chain.input);
+    chain.output.connect(off.destination);
+    src.start();
+    return off.startRendering();
+  }
+
+  // ------------------------------------------------------------
+  // Analyse : volume (LUFS approximatif), pic, équilibre des fréquences
+  // ------------------------------------------------------------
+  function lufsFrom(r) {
+    var blk = Math.round(r.sampleRate * 0.1);
+    var nb = Math.floor(r.length / blk);
+    var ms = [];
+    for (var b = 0; b < nb; b++) {
+      var s = 0;
+      for (var c = 0; c < r.numberOfChannels; c++) {
+        var d = r.getChannelData(c), a = 0, o = b * blk;
+        for (var i = 0; i < blk; i++) { var v = d[o + i]; a += v * v; }
+        s += a / blk;
+      }
+      ms.push(s);
+    }
+    var wins = [];
+    for (var j = 0; j + 4 <= ms.length; j++) wins.push((ms[j] + ms[j + 1] + ms[j + 2] + ms[j + 3]) / 4);
+    if (!wins.length) return -70;
+    function l(x) { return -0.691 + 10 * Math.log10(x + 1e-12); }
+    function mean(arr) { return arr.reduce(function (a, b2) { return a + b2; }, 0) / arr.length; }
+    var g1 = wins.filter(function (x) { return l(x) > -70; });
+    if (!g1.length) return -70;
+    var th = l(mean(g1)) - 10;
+    var g2 = g1.filter(function (x) { return l(x) > th; });
+    return l(mean(g2.length ? g2 : g1));
+  }
+
+  function measureLUFS(buf) {
+    var off = new OAC(buf.numberOfChannels, buf.length, buf.sampleRate);
+    var s = off.createBufferSource(); s.buffer = buf;
+    var sh = off.createBiquadFilter(); sh.type = "highshelf"; sh.frequency.value = 1500; sh.gain.value = 4;
+    var hp = off.createBiquadFilter(); hp.type = "highpass"; hp.frequency.value = 38; hp.Q.value = -6;
+    s.connect(sh); sh.connect(hp); hp.connect(off.destination); s.start();
+    return off.startRendering().then(lufsFrom);
+  }
+
+  function peakOf(b) {
+    var pk = 0;
+    for (var c = 0; c < b.numberOfChannels; c++) {
+      var d = b.getChannelData(c);
+      for (var i = 0; i < d.length; i++) { var v = Math.abs(d[i]); if (v > pk) pk = v; }
+    }
+    return pk;
+  }
+
+  function crestOf(b) {
+    var pk = 0, sum = 0, n = 0;
+    for (var c = 0; c < b.numberOfChannels; c++) {
+      var d = b.getChannelData(c);
+      for (var i = 0; i < d.length; i++) { var v = d[i]; var a = Math.abs(v); if (a > pk) pk = a; sum += v * v; n++; }
+    }
+    var rms = Math.sqrt(sum / Math.max(1, n));
+    return 20 * Math.log10((pk + 1e-9) / (rms + 1e-9));
+  }
+
+  function fft(re, im) {
+    var n = re.length, i, j, bit, t;
+    for (i = 1, j = 0; i < n; i++) {
+      bit = n >> 1;
+      for (; j & bit; bit >>= 1) j ^= bit;
+      j ^= bit;
+      if (i < j) { t = re[i]; re[i] = re[j]; re[j] = t; t = im[i]; im[i] = im[j]; im[j] = t; }
+    }
+    for (var len = 2; len <= n; len <<= 1) {
+      var ang = -2 * Math.PI / len, wr = Math.cos(ang), wi = Math.sin(ang);
+      for (var s = 0; s < n; s += len) {
+        var cr = 1, ci = 0;
+        for (var k = 0; k < len / 2; k++) {
+          var a = s + k, b = s + k + len / 2;
+          var xr = re[b] * cr - im[b] * ci, xi = re[b] * ci + im[b] * cr;
+          re[b] = re[a] - xr; im[b] = im[a] - xi;
+          re[a] += xr; im[a] += xi;
+          var ncr = cr * wr - ci * wi; ci = cr * wi + ci * wr; cr = ncr;
+        }
+      }
+    }
+  }
+
+  function balanceOf(b) {
+    var N = 4096, sr = b.sampleRate, n = b.length, ch = b.numberOfChannels;
+    var total = Math.floor((n - N) / N);
+    if (total < 1) return { low: 0, mid: 0, high: 0 };
+    var step = Math.max(1, Math.floor(total / 40));
+    var eL = 0, eM = 0, eH = 0;
+    var re = new Float32Array(N), im = new Float32Array(N);
+    var chans = [];
+    for (var c = 0; c < ch; c++) chans.push(b.getChannelData(c));
+    for (var w = 0; w < total; w += step) {
+      var off = w * N;
+      for (var i = 0; i < N; i++) {
+        var m = 0;
+        for (var c2 = 0; c2 < ch; c2++) m += chans[c2][off + i];
+        re[i] = (m / ch) * (0.5 - 0.5 * Math.cos(2 * Math.PI * i / N));
+        im[i] = 0;
+      }
+      fft(re, im);
+      for (var k = 1; k < N / 2; k++) {
+        var f = k * sr / N, pw = re[k] * re[k] + im[k] * im[k];
+        if (f < 250) eL += pw; else if (f < 4000) eM += pw; else if (f < 16000) eH += pw;
+      }
+    }
+    function db(x) { return 10 * Math.log10(x + 1e-12); }
+    return { low: db(eL), mid: db(eM), high: db(eH) };
+  }
+
+  // ------------------------------------------------------------
+  // Fichier WAV
+  // ------------------------------------------------------------
+  function toWav(b, scale) {
+    scale = scale || 1;
+    var ch = b.numberOfChannels, len = b.length, sr = b.sampleRate;
+    var bytes = 44 + len * ch * 2;
+    var view = new DataView(new ArrayBuffer(bytes));
+    function str(o, s) { for (var i = 0; i < s.length; i++) view.setUint8(o + i, s.charCodeAt(i)); }
+    str(0, "RIFF"); view.setUint32(4, bytes - 8, true); str(8, "WAVE");
+    str(12, "fmt "); view.setUint32(16, 16, true); view.setUint16(20, 1, true);
+    view.setUint16(22, ch, true); view.setUint32(24, sr, true);
+    view.setUint32(28, sr * ch * 2, true); view.setUint16(32, ch * 2, true);
+    view.setUint16(34, 16, true); str(36, "data"); view.setUint32(40, len * ch * 2, true);
+    var data = [];
+    for (var c = 0; c < ch; c++) data.push(b.getChannelData(c));
+    var o = 44;
+    for (var i = 0; i < len; i++) {
+      for (var c2 = 0; c2 < ch; c2++) {
+        var s = Math.max(-1, Math.min(1, data[c2][i] * scale));
+        view.setInt16(o, s < 0 ? s * 0x8000 : s * 0x7fff, true);
+        o += 2;
+      }
+    }
+    return new Blob([view], { type: "audio/wav" });
+  }
+
+  function download(blob, name) {
+    var url = URL.createObjectURL(blob);
+    var a = document.createElement("a");
+    a.href = url; a.download = name;
+    document.body.appendChild(a); a.click(); a.remove();
+    setTimeout(function () { URL.revokeObjectURL(url); }, 15000);
+  }
+
+  // ------------------------------------------------------------
+  // Compte, abonnement, limites gratuites
+  // ------------------------------------------------------------
+  function qKey() {
+    var d = new Date();
+    return "mm_exp_" + d.getFullYear() + "-" + (d.getMonth() + 1) + "_" + (user ? user.id : "anon");
+  }
+  function qGet() { try { return parseInt(localStorage.getItem(qKey()) || "0", 10) || 0; } catch (e) { return 0; } }
+  function qInc() { try { localStorage.setItem(qKey(), String(qGet() + 1)); } catch (e) {} }
+
+  function renderAccount() {
+    $("testBanner").hidden = !testMode;
+    $("authOut").hidden = testMode || !!user;
+    $("authIn").hidden = testMode || !user;
+    if (user) {
+      $("whoami").textContent = "Connecté : " + user.email + " – Plan : " + (premium ? "Premium" : "Gratuit");
+      $("upgrade").hidden = premium;
+    }
+    $("quota").textContent = premium
+      ? "Exports illimités."
+      : "Exports gratuits restants ce mois-ci : " + Math.max(0, CONFIG.FREE_EXPORTS - qGet()) + " sur " + CONFIG.FREE_EXPORTS + ".";
+  }
+
+  async function refreshUser() {
+    if (!sb) return;
+    var r = await sb.auth.getSession();
+    user = r.data && r.data.session ? r.data.session.user : null;
+    premium = false;
+    if (user) {
+      var p = await sb.from("profiles").select("is_premium").eq("id", user.id).maybeSingle();
+      premium = !!(p.data && p.data.is_premium);
+    }
+    renderAccount();
+  }
+
+  async function login() {
+    if (!sb) return;
+    var r = await sb.auth.signInWithPassword({ email: $("email").value.trim(), password: $("pass").value });
+    $("authMsg").textContent = r.error ? "Connexion impossible : " + r.error.message : "Connecté.";
+  }
+
+  async function signup() {
+    if (!sb) return;
+    var r = await sb.auth.signUp({ email: $("email").value.trim(), password: $("pass").value });
+    $("authMsg").textContent = r.error
+      ? "Création impossible : " + r.error.message
+      : "Compte créé. Si un e-mail de confirmation est demandé, ouvre-le puis connecte-toi.";
+  }
+
+  async function logout() {
+    if (!sb) return;
+    await sb.auth.signOut();
+    $("authMsg").textContent = "Déconnecté.";
+  }
+
+  function upgrade() {
+    if (!user) { $("authMsg").textContent = "Connecte-toi d’abord, puis choisis Premium."; return; }
+    if (!CONFIG.STRIPE_LINK) { $("authMsg").textContent = "Le paiement n’est pas encore configuré."; return; }
+    window.location.href = CONFIG.STRIPE_LINK +
+      "?prefilled_email=" + encodeURIComponent(user.email) +
+      "&client_reference_id=" + encodeURIComponent(user.id);
+  }
+
+  function needPremium(what) {
+    if (premium) return false;
+    setStatus(what + " est réservé aux abonnés Premium (10 $ / mois). Connecte-toi et passe Premium dans « Mon compte ».");
+    return true;
+  }
+
+  $("login").addEventListener("click", login);
+  $("signup").addEventListener("click", signup);
+  $("logout").addEventListener("click", logout);
+  $("upgrade").addEventListener("click", upgrade);
+
+  if (CONFIG.SUPABASE_URL && CONFIG.SUPABASE_ANON_KEY && window.supabase) {
+    sb = window.supabase.createClient(CONFIG.SUPABASE_URL, CONFIG.SUPABASE_ANON_KEY);
+    sb.auth.onAuthStateChange(function () { setTimeout(refreshUser, 0); });
+    refreshUser();
+  } else {
+    testMode = true;
+    premium = true;
+  }
+  renderAccount();
+
+  // ------------------------------------------------------------
+  // Interface : préréglages, voix
+  // ------------------------------------------------------------
+  var tbody = $("presetBody");
+  PRESETS.forEach(function (p, i) {
+    var tr = document.createElement("tr");
+    tr.innerHTML = "<td>" + p.n + "</td><td>" + sign(p.low) + "</td><td>" + sign(p.mid) +
+      "</td><td>" + sign(p.high) + "</td><td>" + p.thr + "</td>" +
+      "<td><button class=\"small\" data-i=\"" + i + "\">Appliquer</button></td>";
+    tbody.appendChild(tr);
+  });
+  tbody.addEventListener("click", function (e) {
+    var b = e.target.closest("button");
+    if (!b) return;
+    var p = PRESETS[parseInt(b.getAttribute("data-i"), 10)];
+    setSliders({ low: p.low, mid: p.mid, high: p.high, thr: p.thr, ratio: p.ratio, gain: p.gain });
+    setStatus("Préréglage « " + p.n + " » appliqué.");
   });
 
-  function enable(on) {
-    ["play", "stop", "ab", "export"].forEach(function (id) { $(id).disabled = !on; });
+  $("vocalBtn").addEventListener("click", function () {
+    var v = VOCALS[$("vocal").value];
+    setSliders(v);
+    setStatus("Réglage vocal appliqué.");
+  });
+
+  // ------------------------------------------------------------
+  // Chargement du fichier
+  // ------------------------------------------------------------
+  function setReady(on) {
+    ["play", "stop", "ab", "export", "auto", "split", "tune"].forEach(function (id) { $(id).disabled = !on; });
+    $("untune").disabled = !(on && orig && buffer !== orig);
   }
 
   $("file").addEventListener("change", function (e) {
     var f = e.target.files[0];
     if (!f) return;
     stop();
-    enable(false);
+    setReady(false);
     setStatus("Chargement…");
     fileName = f.name.replace(/\.[^.]+$/, "") || "morceau";
     var reader = new FileReader();
     reader.onload = function () {
       if (!ctx) ctx = new AC();
       ctx.decodeAudioData(reader.result, function (b) {
+        orig = b;
         buffer = b;
+        $("tuneInfo").textContent = "";
         $("fileInfo").textContent = f.name + " – " + b.duration.toFixed(1) + " s, " +
           b.numberOfChannels + " canal(aux), " + b.sampleRate + " Hz";
-        enable(true);
-        setStatus("Prêt. Appuie sur Lire.");
+        setReady(true);
+        setStatus("Prêt. Appuie sur « Masteriser automatiquement » ou sur Lire.");
       }, function () {
         setStatus("Ce fichier ne peut pas être lu. Essaie un MP3, WAV ou M4A.");
       });
@@ -228,29 +687,69 @@
     reader.readAsArrayBuffer(f);
   });
 
+  // ------------------------------------------------------------
+  // Master automatique
+  // ------------------------------------------------------------
+  $("auto").addEventListener("click", async function () {
+    if (!buffer || busy) return;
+    busy = true; setReady(false);
+    try {
+      setStatus("Analyse du morceau…");
+      var lufs = await measureLUFS(buffer);
+      var bal = balanceOf(buffer);
+      var crest = crestOf(buffer);
+      var pk = 20 * Math.log10(peakOf(buffer) + 1e-9);
+      var t = TARGETS[$("platform").value];
+      var p = params();
+
+      p.low = clamp(half((2 - (bal.low - bal.mid)) * 0.5), -4, 4);
+      p.mid = 0;
+      p.high = clamp(half((-16 - (bal.high - bal.mid)) * 0.5), -4, 4);
+      if (crest > 16) { p.thr = -26; p.ratio = 4; }
+      else if (crest > 12) { p.thr = -22; p.ratio = 3; }
+      else { p.thr = -18; p.ratio = 2; }
+      p.gain = clamp(half(t.lufs - lufs), -12, 12);
+      p.ceil = -1;
+      setSliders(p);
+
+      $("autoInfo").textContent = "Mesuré : " + lufs.toFixed(1) + " LUFS, pic " + pk.toFixed(1) +
+        " dB. Réglages appliqués : graves " + sign(p.low) + " dB, aigus " + sign(p.high) +
+        " dB, compression " + p.thr + " dB à " + p.ratio + " : 1, volume " + sign(p.gain) +
+        " dB pour viser " + t.name + ".";
+      setStatus("Master automatique prêt. Écoute le résultat, puis exporte.");
+    } catch (err) {
+      setStatus("L’analyse a échoué. Essaie avec un fichier plus court.");
+    }
+    busy = false; setReady(!!buffer);
+  });
+
+  // ------------------------------------------------------------
+  // Écoute
+  // ------------------------------------------------------------
   function play() {
     if (!buffer) return;
     stop();
     if (ctx.state === "suspended") ctx.resume();
     var chain = buildChain(ctx);
     applyParams(chain, params());
-    var wet = ctx.createGain();
-    var dry = ctx.createGain();
+    var wet = ctx.createGain(), dry = ctx.createGain();
     wet.gain.value = bypass ? 0 : 1;
     dry.gain.value = bypass ? 1 : 0;
-    source = ctx.createBufferSource();
-    source.buffer = buffer;
-    source.loop = true;
-    source.connect(chain.input);
+    var sw = ctx.createBufferSource(); sw.buffer = buffer; sw.loop = true;
+    var sd = ctx.createBufferSource(); sd.buffer = orig; sd.loop = true;
+    sw.connect(chain.input);
     chain.output.connect(wet); wet.connect(ctx.destination);
-    source.connect(dry); dry.connect(ctx.destination);
-    source.start();
+    sd.connect(dry); dry.connect(ctx.destination);
+    var t0 = ctx.currentTime + 0.05;
+    sw.start(t0); sd.start(t0);
+    sources = [sw, sd];
     live = { chain: chain, wet: wet, dry: dry };
     setStatus(bypass ? "Lecture : original." : "Lecture : son traité.");
   }
 
   function stop() {
-    if (source) { try { source.stop(); } catch (e) {} source.disconnect(); source = null; }
+    sources.forEach(function (n) { try { n.stop(); } catch (e) {} n.disconnect(); });
+    sources = [];
     live = null;
   }
 
@@ -267,58 +766,348 @@
     }
   });
 
-  function toWav(b) {
-    var ch = b.numberOfChannels, len = b.length, sr = b.sampleRate;
-    var bytes = 44 + len * ch * 2;
-    var view = new DataView(new ArrayBuffer(bytes));
-    function str(o, s) { for (var i = 0; i < s.length; i++) view.setUint8(o + i, s.charCodeAt(i)); }
-    str(0, "RIFF"); view.setUint32(4, bytes - 8, true); str(8, "WAVE");
-    str(12, "fmt "); view.setUint32(16, 16, true); view.setUint16(20, 1, true);
-    view.setUint16(22, ch, true); view.setUint32(24, sr, true);
-    view.setUint32(28, sr * ch * 2, true); view.setUint16(32, ch * 2, true);
-    view.setUint16(34, 16, true); str(36, "data"); view.setUint32(40, len * ch * 2, true);
-    var data = [];
-    for (var c = 0; c < ch; c++) data.push(b.getChannelData(c));
-    var o = 44;
-    for (var i = 0; i < len; i++) {
-      for (var c2 = 0; c2 < ch; c2++) {
-        var s = Math.max(-1, Math.min(1, data[c2][i]));
-        view.setInt16(o, s < 0 ? s * 0x8000 : s * 0x7fff, true);
-        o += 2;
-      }
+  // ------------------------------------------------------------
+  // Export
+  // ------------------------------------------------------------
+  $("export").addEventListener("click", async function () {
+    if (!buffer || busy) return;
+    if (!premium && qGet() >= CONFIG.FREE_EXPORTS) {
+      setStatus("Limite gratuite atteinte pour ce mois-ci. Passe Premium pour exporter sans limite.");
+      return;
     }
-    return new Blob([view], { type: "audio/wav" });
+    busy = true; setReady(false);
+    try {
+      setStatus("Traitement en cours…");
+      var p = params();
+      var rendered = await render(p);
+      var info = "";
+      var t = TARGETS[$("platform").value];
+      var l = 0;
+      if (premium && $("match").checked) {
+        for (var it = 0; it < 3; it++) {
+          setStatus("Ajustement du volume (" + (it + 1) + "/3)…");
+          l = await measureLUFS(rendered);
+          var diff = t.lufs - l;
+          if (Math.abs(diff) < 0.4) break;
+          p.gain = clamp(p.gain + diff, -24, 24);
+          rendered = await render(p);
+        }
+        l = await measureLUFS(rendered);
+      }
+      var pk = peakOf(rendered);
+      var lim = Math.pow(10, p.ceil / 20);
+      var scale = pk > lim ? lim / pk : 1;
+      if (premium && $("match").checked) {
+        info = " Volume final : " + (l + 20 * Math.log10(scale)).toFixed(1) + " LUFS (cible " + t.name + " : " + t.lufs + ").";
+      } else if (!premium) {
+        info = " Le volume adapté aux plateformes est réservé aux abonnés Premium.";
+      }
+      download(toWav(rendered, scale), fileName + "-master.wav");
+      if (!premium) qInc();
+      renderAccount();
+      setStatus("Export terminé." + info);
+    } catch (err) {
+      setStatus("L’export a échoué. Réessaie avec un fichier plus court.");
+    }
+    busy = false; setReady(!!buffer);
+  });
+
+  // ------------------------------------------------------------
+  // Séparation voix / instrumental (mode rapide)
+  // ------------------------------------------------------------
+  function normalizeTo(arrs, target) {
+    var pk = 0;
+    arrs.forEach(function (a) { for (var i = 0; i < a.length; i++) { var v = Math.abs(a[i]); if (v > pk) pk = v; } });
+    if (pk < 1e-6) return;
+    var g = target / pk;
+    arrs.forEach(function (a) { for (var i = 0; i < a.length; i++) a[i] *= g; });
   }
 
-  $("export").addEventListener("click", function () {
-    if (!buffer) return;
-    enable(false);
-    setStatus("Traitement en cours…");
-    var OAC = window.OfflineAudioContext || window.webkitOfflineAudioContext;
-    var off = new OAC(buffer.numberOfChannels, buffer.length, buffer.sampleRate);
-    var chain = buildChain(off);
-    applyParams(chain, params());
-    var src = off.createBufferSource();
-    src.buffer = buffer;
-    src.connect(chain.input);
-    chain.output.connect(off.destination);
-    src.start();
-    off.startRendering().then(function (rendered) {
-      var blob = toWav(rendered);
-      var url = URL.createObjectURL(blob);
-      var a = document.createElement("a");
-      a.href = url;
-      a.download = fileName + "-master.wav";
-      document.body.appendChild(a);
-      a.click();
-      a.remove();
-      setTimeout(function () { URL.revokeObjectURL(url); }, 10000);
-      enable(true);
-      setStatus("Export terminé : " + a.download);
-    }).catch(function () {
-      enable(true);
-      setStatus("L'export a échoué. Réessaie avec un fichier plus court.");
-    });
+  $("split").addEventListener("click", function () {
+    if (!buffer || busy) return;
+    if (needPremium("La séparation voix / instrumental")) return;
+    if (orig.numberOfChannels < 2) {
+      setStatus("Il faut un fichier stéréo pour séparer la voix de l’instrumental.");
+      return;
+    }
+    setStatus("Séparation en cours…");
+    setTimeout(function () {
+      var L = orig.getChannelData(0), R = orig.getChannelData(1);
+      var n = orig.length, sr = orig.sampleRate;
+      var voc = ctx.createBuffer(1, n, sr);
+      var ins = ctx.createBuffer(2, n, sr);
+      var v = voc.getChannelData(0), iL = ins.getChannelData(0), iR = ins.getChannelData(1);
+      var a = 1 - Math.exp(-2 * Math.PI * 150 / sr), lp = 0;
+      for (var i = 0; i < n; i++) {
+        var mid = (L[i] + R[i]) * 0.5, side = (L[i] - R[i]) * 0.5;
+        lp += a * (mid - lp);
+        v[i] = mid - lp;
+        iL[i] = side + lp;
+        iR[i] = side + lp;
+      }
+      normalizeTo([v], 0.9);
+      normalizeTo([iL, iR], 0.9);
+      download(toWav(voc, 1), fileName + "-voix.wav");
+      setTimeout(function () { download(toWav(ins, 1), fileName + "-instrumental.wav"); }, 800);
+      setStatus("Séparation terminée : 2 fichiers téléchargés (voix et instrumental).");
+    }, 50);
+  });
+
+  // ------------------------------------------------------------
+  // Auto-Tune : détection de la hauteur (YIN) + correction (PSOLA)
+  // ------------------------------------------------------------
+  var AT_D = 4;
+  var AT_HOP = 512; // pas d’analyse en échantillons (à la fréquence d’origine)
+
+  function sleep() { return new Promise(function (r) { setTimeout(r, 0); }); }
+
+  function monoOf(b) {
+    var n = b.length, ch = b.numberOfChannels, m = new Float32Array(n);
+    for (var c = 0; c < ch; c++) {
+      var d = b.getChannelData(c);
+      for (var i = 0; i < n; i++) m[i] += d[i] / ch;
+    }
+    return m;
+  }
+
+  async function detectPitch(mono, sr, onProgress) {
+    var D = AT_D, nD = Math.floor(mono.length / D);
+    var ds = new Float32Array(nD);
+    for (var i = 0; i < nD; i++) {
+      var s = 0;
+      for (var k = 0; k < D; k++) s += mono[i * D + k];
+      ds[i] = s / D;
+    }
+    var srD = sr / D, W = 512, hopD = AT_HOP / D;
+    var minLag = Math.max(2, Math.floor(srD / 1000)), maxLag = Math.ceil(srD / 65);
+    var nF = Math.floor(nD / hopD) + 1;
+    var f0 = new Float32Array(nF), voiced = new Uint8Array(nF);
+    var d = new Float32Array(maxLag + 2), dn = new Float32Array(maxLag + 2);
+    for (var fi = 0; fi < nF; fi++) {
+      if (fi % 150 === 0) {
+        if (onProgress) onProgress(fi / nF);
+        await sleep();
+      }
+      var st = fi * hopD - (W >> 1);
+      if (st < 0 || st + W + maxLag + 1 >= nD) continue;
+      var e = 0, j;
+      for (j = 0; j < W; j++) { var v = ds[st + j]; e += v * v; }
+      if (Math.sqrt(e / W) < 0.004) continue;
+      var tau;
+      for (tau = 1; tau <= maxLag + 1; tau++) {
+        var sum = 0;
+        for (j = 0; j < W; j++) { var df = ds[st + j] - ds[st + j + tau]; sum += df * df; }
+        d[tau] = sum;
+      }
+      var run = 0; dn[0] = 1;
+      for (tau = 1; tau <= maxLag + 1; tau++) {
+        run += d[tau];
+        dn[tau] = run > 0 ? d[tau] * tau / run : 1;
+      }
+      var best = -1;
+      for (tau = minLag; tau <= maxLag; tau++) {
+        if (dn[tau] < 0.15) {
+          while (tau + 1 <= maxLag && dn[tau + 1] < dn[tau]) tau++;
+          best = tau; break;
+        }
+      }
+      if (best < 0) {
+        var mn = 1e9, mt = -1;
+        for (tau = minLag; tau <= maxLag; tau++) { if (dn[tau] < mn) { mn = dn[tau]; mt = tau; } }
+        if (mn < 0.3) best = mt;
+      }
+      if (best < 0) continue;
+      var a = dn[best - 1], b = dn[best], c = dn[best + 1];
+      var den = a - 2 * b + c;
+      var shift = Math.abs(den) > 1e-9 ? 0.5 * (a - c) / den : 0;
+      shift = Math.max(-1, Math.min(1, shift));
+      f0[fi] = srD / (best + shift);
+      voiced[fi] = 1;
+    }
+    // nettoyage : on retire les notes de moins de 3 pas, puis filtre médian
+    var q = 0, k2;
+    while (q < nF) {
+      if (voiced[q]) {
+        var r = q;
+        while (r < nF && voiced[r]) r++;
+        if (r - q < 3) for (k2 = q; k2 < r; k2++) voiced[k2] = 0;
+        q = r;
+      } else q++;
+    }
+    var clean = new Float32Array(f0);
+    for (q = 0; q < nF; q++) {
+      if (!voiced[q]) continue;
+      var w = [];
+      for (k2 = q - 2; k2 <= q + 2; k2++) if (k2 >= 0 && k2 < nF && voiced[k2]) w.push(f0[k2]);
+      w.sort(function (x, y) { return x - y; });
+      clean[q] = w[w.length >> 1];
+    }
+    return { f0: clean, voiced: voiced, hop: AT_HOP };
+  }
+
+  // o = { key: 0..11, scale: "chrom"|"major"|"minor", amount: 0..1, speed: 0..1 }
+  function buildRatios(track, sr, o) {
+    var f0 = track.f0, voiced = track.voiced, n = f0.length;
+    var ratio = new Float32Array(n);
+    for (var z = 0; z < n; z++) ratio[z] = 1;
+    var allowed = [];
+    for (var p = 0; p < 12; p++) allowed.push(false);
+    var iv = o.scale === "major" ? [0, 2, 4, 5, 7, 9, 11]
+      : o.scale === "minor" ? [0, 2, 3, 5, 7, 8, 10]
+      : [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11];
+    iv.forEach(function (x) { allowed[(o.key + x) % 12] = true; });
+    function nearest(m) {
+      var best = 0, bd = 1e9;
+      for (var k = Math.floor(m) - 7; k <= Math.ceil(m) + 7; k++) {
+        if (allowed[((k % 12) + 12) % 12]) {
+          var dd = Math.abs(k - m);
+          if (dd < bd) { bd = dd; best = k; }
+        }
+      }
+      return best;
+    }
+    var tau = (1 - o.speed) * 0.25;
+    var alpha = tau <= 0.0005 ? 1 : 1 - Math.exp(-(track.hop / sr) / tau);
+    var i = 0;
+    while (i < n) {
+      if (!voiced[i]) { i++; continue; }
+      var prevT = null, cs = null;
+      while (i < n && voiced[i]) {
+        var midi = 69 + 12 * Math.log2(f0[i] / 440);
+        var tgt = (prevT !== null && Math.abs(midi - prevT) < 0.65) ? prevT : nearest(midi);
+        prevT = tgt;
+        var ct = (tgt - midi) * 100 * o.amount;
+        cs = cs === null ? ct : cs + alpha * (ct - cs);
+        ratio[i] = Math.pow(2, cs / 1200);
+        i++;
+      }
+    }
+    return ratio;
+  }
+
+  function psolaChannel(x, sr, track, ratio) {
+    var f0 = track.f0, voiced = track.voiced, hop = track.hop;
+    var n = x.length, nF = f0.length;
+    var active = new Uint8Array(nF), f0f = new Float32Array(f0), rf = new Float32Array(ratio);
+    var i;
+    for (i = 0; i < nF; i++) {
+      if (voiced[i]) { active[i] = 1; continue; }
+      var nb = -1;
+      if (i > 0 && voiced[i - 1]) nb = i - 1;
+      else if (i < nF - 1 && voiced[i + 1]) nb = i + 1;
+      if (nb >= 0) { active[i] = 1; f0f[i] = f0[nb]; rf[i] = ratio[nb]; }
+    }
+    var out = new Float32Array(n);
+    i = 0;
+    while (i < nF) {
+      if (!active[i]) { i++; continue; }
+      var j = i;
+      while (j < nF && active[j]) j++;
+      var tS = Math.max(0, i * hop - (hop >> 1));
+      var tE = Math.min(n - 1, (j - 1) * hop + (hop >> 1));
+      var mk = [], mT = [];
+      var T0 = sr / f0f[i];
+      var best = tS, bv = -1e9, q;
+      for (q = tS; q < Math.min(n, tS + Math.round(T0)); q++) { if (x[q] > bv) { bv = x[q]; best = q; } }
+      var t = best;
+      while (t <= tE) {
+        var fi = Math.min(nF - 1, Math.round(t / hop));
+        var T = sr / f0f[fi];
+        mk.push(t); mT.push(T);
+        var nom = t + T;
+        var lo = Math.max(0, Math.round(nom - 0.25 * T)), hi = Math.min(n - 1, Math.round(nom + 0.25 * T));
+        var bq = Math.round(nom), bv2 = -1e9;
+        for (q = lo; q <= hi; q++) { if (x[q] > bv2) { bv2 = x[q]; bq = q; } }
+        if (bq <= t) bq = Math.round(t + T);
+        t = bq;
+      }
+      if (mk.length) {
+        var s = tS, jm = 0;
+        while (s <= tE) {
+          var fi2 = Math.min(nF - 1, Math.max(0, Math.round(s / hop)));
+          var Tin = sr / f0f[fi2], r = rf[fi2], Tout = Tin / r;
+          while (jm + 1 < mk.length && Math.abs(mk[jm + 1] - s) <= Math.abs(mk[jm] - s)) jm++;
+          var cen = mk[jm], L = Math.max(2, Math.round(mT[jm])), g = 1 / r;
+          var so = Math.round(s);
+          for (var k = -L; k <= L; k++) {
+            var a = cen + k, b = so + k;
+            if (a >= 0 && a < n && b >= 0 && b < n) out[b] += x[a] * 0.5 * (1 + Math.cos(Math.PI * k / L)) * g;
+          }
+          s += Tout;
+        }
+      }
+      i = j;
+    }
+    var res = new Float32Array(n);
+    for (var tt = 0; tt < n; tt++) {
+      var fp = tt / hop, a0 = Math.floor(fp), fr = fp - a0;
+      var v0 = a0 < nF ? voiced[a0] : 0, v1 = a0 + 1 < nF ? voiced[a0 + 1] : 0;
+      var m = v0 * (1 - fr) + v1 * fr;
+      res[tt] = x[tt] * (1 - m) + out[tt] * m;
+    }
+    return res;
+  }
+
+  var tuneNames = ["Do", "Do♯", "Ré", "Ré♯", "Mi", "Fa", "Fa♯", "Sol", "Sol♯", "La", "La♯", "Si"];
+  function refreshTuneLabels() {
+    $("tamountO").textContent = $("tamount").value + " %";
+    var sp = parseInt($("tspeed").value, 10);
+    $("tspeedO").textContent = sp + " %" + (sp >= 85 ? " (effet robot)" : sp <= 30 ? " (naturel)" : "");
+  }
+  $("tamount").addEventListener("input", refreshTuneLabels);
+  $("tspeed").addEventListener("input", refreshTuneLabels);
+  refreshTuneLabels();
+
+  $("tune").addEventListener("click", async function () {
+    if (!orig || busy) return;
+    if (needPremium("L’Auto-Tune")) return;
+    busy = true; setReady(false);
+    try {
+      stop();
+      var sr = orig.sampleRate;
+      var mono = monoOf(orig);
+      var track = await detectPitch(mono, sr, function (f) {
+        setStatus("Détection des notes… " + Math.round(f * 100) + " %");
+      });
+      var nv = 0, nF = track.voiced.length;
+      for (var i = 0; i < nF; i++) nv += track.voiced[i];
+      if (nv < Math.max(5, nF * 0.03)) {
+        setStatus("Aucune voix détectée. Utilise une voix seule (a cappella), sans instruments.");
+        busy = false; setReady(!!orig);
+        return;
+      }
+      var opts = {
+        key: parseInt($("tkey").value, 10),
+        scale: $("tscale").value,
+        amount: parseInt($("tamount").value, 10) / 100,
+        speed: parseInt($("tspeed").value, 10) / 100
+      };
+      var ratio = buildRatios(track, sr, opts);
+      var nb = ctx.createBuffer(orig.numberOfChannels, orig.length, sr);
+      for (var c = 0; c < orig.numberOfChannels; c++) {
+        setStatus("Correction de la voix… (canal " + (c + 1) + "/" + orig.numberOfChannels + ")");
+        await sleep();
+        nb.copyToChannel(psolaChannel(orig.getChannelData(c), sr, track, ratio), c);
+      }
+      buffer = nb;
+      var tot = 0;
+      for (var k = 0; k < nF; k++) if (track.voiced[k]) tot += Math.abs(Math.log2(ratio[k])) * 1200;
+      $("tuneInfo").textContent = "Auto-Tune appliqué sur " + Math.round(100 * nv / nF) +
+        " % du morceau (voix détectée). Correction moyenne : " + Math.round(tot / nv) + " cents.";
+      setStatus("Auto-Tune terminé. Appuie sur Lire pour écouter, « Original » pour comparer.");
+    } catch (err) {
+      setStatus("L’Auto-Tune a échoué. Essaie avec un fichier plus court.");
+    }
+    busy = false; setReady(!!orig);
+  });
+
+  $("untune").addEventListener("click", function () {
+    if (!orig) return;
+    stop();
+    buffer = orig;
+    $("tuneInfo").textContent = "Auto-Tune annulé.";
+    setReady(true);
+    setStatus("Auto-Tune annulé : retour à la voix d’origine.");
   });
 
   refreshLabels();
