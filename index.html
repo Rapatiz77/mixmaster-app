@@ -109,6 +109,16 @@
     vertical-align: middle;
   }
   #status { min-height: 1.4em; color: var(--gold-light); font-size: .9rem; margin: 10px 0 0; }
+  footer.site-footer {
+    max-width: 560px;
+    margin: 8px auto 0;
+    padding: 18px 0 4px;
+    border-top: 1px solid var(--line);
+    text-align: center;
+    color: var(--muted);
+    font-size: .85rem;
+  }
+  footer.site-footer strong { color: var(--gold); letter-spacing: .12em; }
 </style>
 </head>
 <body>
@@ -272,6 +282,9 @@
     <p id="status" role="status"></p>
   </section>
 </main>
+<footer class="site-footer">
+  <p style="margin:0">© 2026 <strong>KMIKZ RAPATIZ</strong>. Tous droits réservés.</p>
+</footer>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.js"></script>
 <script>
@@ -284,8 +297,8 @@
   // et toutes les fonctions sont ouvertes.
   // ============================================================
   var CONFIG = {
-    SUPABASE_URL: "",
-    SUPABASE_ANON_KEY: "",
+    SUPABASE_URL: "https://usvwiugppunflmrkyjht.supabase.co",
+    SUPABASE_ANON_KEY: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InVzdndpdWdwcHVuZmxtcmt5amh0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTI5ODA3MzksImV4cCI6MjEwODU1NjczOX0._sXtWzOrxUJJpZPDLWGSUu4Mz4swGRPH8mEdg2IjqTw",
     STRIPE_LINK: "",
     FREE_EXPORTS: 3
   };
